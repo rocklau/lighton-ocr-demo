@@ -1,4 +1,6 @@
-# LightOnOCR-1B-1025 运行指南
+# LightOnOCR-1B-1025 CPU 运行指南
+
+> ⚠️ **注意**: 本项目使用 **CPU 模式** 部署 LightOnOCR，适用于没有 NVIDIA GPU 的环境。
 
 ## 概述
 
@@ -8,11 +10,11 @@ LightOnOCR-1B-1025 是一个紧凑的端到端视觉-语言模型，用于光学
 
 - **Docker**: 用于在 Ubuntu 容器中运行 vLLM
 - **内存**: 建议 16GB+ RAM
-- **CPU**: 支持 AVX512/AVX2 指令集
+- **CPU**: 支持 AVX512/AVX2 指令集 (x86_64)
 
 ## 快速启动
 
-### 1. 启动 Docker 服务
+### 1. 启动 Docker 服务 (CPU 模式)
 
 ```bash
 docker run -d -p 8000:8000 \
@@ -104,10 +106,11 @@ source .venv/bin/activate && python3 test_ocr_simple.py
 | `/tokenize` | POST | 分词 |
 | `/detokenize` | POST | 解码 |
 
-## 性能说明
+## CPU 模式性能说明
 
-- **CPU 模式**: 首次请求需要较长时间进行模型编译和预热
+- **首次请求**: 需要较长时间进行模型编译和预热 (约 3-5 分钟)
 - **内存占用**: 约需 8GB+ RAM
+- **推理速度**: 比 GPU 模式慢，但对于文档 OCR 任务仍然可用
 - **支持格式**: PDF (需转换为图片)、JPEG、PNG 等常见图片格式
 
 ## 注意事项
@@ -127,4 +130,4 @@ docker rm lighton-ocr
 ## 参考
 
 - [LightOnOCR Hugging Face](https://huggingface.co/lightonai/LightOnOCR-1B-1025)
-- [vLLM 官方文档](https://docs.vllm.ai/)
+- [vLLM 官方文档 - CPU 安装](https://docs.vllm.ai/en/latest/getting_started/installation/cpu.html)
